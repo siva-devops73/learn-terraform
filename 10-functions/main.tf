@@ -19,8 +19,7 @@ output "fruit_count" {
 
 variable "classes" {
   default = {
-    devops =
-    {
+    devops = {
       name = "devops"
       topics = ["jenkins", "docker"]
     }
