@@ -12,6 +12,10 @@ resource "aws_instance" "web" {
   tags = {
     Name = var.name
   }
+}
+
+resource "null_resource" "ansible" {
+  depends_on = [aws_instance.web, aws_route53_record.www]
 
   provisioner "remote-exec" {
 
@@ -19,7 +23,7 @@ resource "aws_instance" "web" {
       type     = "ssh"
       user     = "centos"
       password = "DevOps321"
-      host     = self.public_ip
+      host     = aws_instance.web.public_ip
     }
 
     inline = [
