@@ -4,15 +4,26 @@ data "aws_ami" "example" {
   name_regex = "Centos-8-DevOps-Practice"
 }
 
+# resource "aws_instance" "web" {
+# count = length(var.instances)
+#  ami           = data.aws_ami.example.id
+#  instance_type = "t3.micro"
+
+#  tags = {
+#    Name = "HelloSiva - ${count.index}"
+#  }
+#}
+
 resource "aws_instance" "web" {
   count = length(var.instances)
   ami           = data.aws_ami.example.id
   instance_type = "t3.micro"
 
   tags = {
-    Name = "HelloSiva - ${count.index}"
+    Name = element(var.instances, count.index)
   }
 }
+
 
 variable "instances" {
   default = ["frontend", "mongodb", "cataloue"]
